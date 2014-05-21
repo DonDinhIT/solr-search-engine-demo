@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-SolrSearchDemon::Application.config.secret_key_base = '24f045c4627602f09bb24ce4ba67ea6143aae401e9cb2d85685c7d3730e5508dc2102037c93fa9be579828e9f0d59990702790f835d7d4c6211ea84078e1058b'
+SolrSearchDemo::Application.config.secret_key_base = 'a88df7aae2a826691575ddf8bb6573ee84d2d83af5914bc78844443c2975fe058a96ea508c7784b2f758969946f999307d70c3a7110988bcb0fab160be933c4c'

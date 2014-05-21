@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-SolrSearchDemon::Application.load_tasks
+SolrSearchDemo::Application.load_tasks
