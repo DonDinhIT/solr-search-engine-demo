@@ -4,13 +4,47 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @search = Post.search do
-      fulltext params[:search]
+    @posts = Post.all
+    # All posts with a `text` field (:title, :content, or :comments) containing params[:search]
+    @search1 = Post.search do
+      fulltext "post"
       with(:published_at).less_than(Time.zone.now)
       facet(:publish_month)
       with(:publish_month, params[:month]) if params[:month].present?
     end
-     @posts = @search.results
+    @results1 = @search1.results
+
+    # Posts with params[:search], params[:search] appears in the title
+    @search2 =  Post.search do
+      fulltext "post" do
+        fields(:title)
+      end
+    end
+    @results2 = @search2.results
+    
+    # Posts with post in the title (boosted) or in the body (not boosted)
+    @search3 = Post.search do
+      fulltext 'post' do
+        fields(:content, :title => 2.0)
+      end
+    end
+    @results3 = @search3.results
+
+    # Posts with the exact phrase "keyword search"
+    @search4 = Post.search do
+      fulltext '"Posts in"'
+    end
+
+    @results4 = @search4.results
+
+    # Posts with the exact phrase "keyword search", query_phrase_slop sets the number of words that may appear between the words in a phrase.
+    @search5 = Post.search do
+      fulltext '"with in"' do
+        query_phrase_slop 2
+      end
+    end
+    @results5 = @search5.results
+
   end
 
   # GET /posts/1

@@ -30,23 +30,107 @@
 
 
 <%= form_tag posts_path, :method => :get do %>
-  <p>
+  <!-- <p>
+    <span>Search all posts with field (:title, :body, or :comments) containing 'params[:search]' </span>
+    <br/>
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "Search", :name => nil %>
   </p>
+
+  <span>Search all Posts with 'params[:search]', scored higher if 'params[:search]' appears in the title </span>
+  <br/>
+  <p>
+    <%= text_field_tag :search, params[:search1] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p> -->
+
 <% end %>
 
-<div id="facets">
-  <h3>Published</h3>
-  <ul>
-    <% for row in @search.facet(:publish_month).rows %>
-      <li>
-        <% if params[:month].blank? %>
-          <%= link_to row.value, :month => row.value %> (<%= row.count %>)
-        <% else %>
-          <strong><%= row.value %></strong> (<%= link_to "remove", :month => nil %>)
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+
+
+<div id="post"> 
+  <h3>1.Search all posts with field (:title, :body, or :comments) containing 'post'</h3>
+
+  <% if @results1 
+  for post in @results1 %>
+    <p>
+      <%= link_to post.title, post %>
+      <span class="comments">(<%= pluralize(post.comments.size, 'comment') %>)</span>
+    </p>
+    <!-- <div class="published_at">on <%= post.published_at.strftime('%b %d, %Y') %></div> -->
+    <div class="content"><%= post.content %></div>
+  <% end
+  end %>
+</div>
+
+<br/>
+<br/>
+
+<div id="post"> 
+  <h3>2.Posts with 'post' *only* in the title</h3>
+  
+  <% if @results2
+  for post in @results2 %>
+    <p>
+      <%= link_to post.title, post %>
+      <span class="comments">(<%= pluralize(post.comments.size, 'comment') %>)</span>
+    </p>
+    <!-- <div class="published_at">on <%= post.published_at.strftime('%b %d, %Y') %></div> -->
+    <div class="content"><%= post.content %></div>
+  <% end
+  end %>
+</div>
+
+<br/>
+<br/>
+
+<div id="post"> 
+  <h3>3.Posts with 'post' in the title (boosted) or in the body (not boosted)</h3>
+  
+  <% if @results3
+  for post in @results3 %>
+    <p>
+      <%= link_to post.title, post %>
+      <span class="comments">(<%= pluralize(post.comments.size, 'comment') %>)</span>
+    </p>
+    <!-- <div class="published_at">on <%= post.published_at.strftime('%b %d, %Y') %></div> -->
+    <div class="content"><%= post.content %></div>
+  <% end
+  end %>
+</div>
+
+<br/>
+<br/>
+
+<div id="post"> 
+  <h3>4.Posts with the exact phrase "keyword search"</h3>
+  
+  <% if @results4
+  for post in @results4 %>
+    <p>
+      <%= link_to post.title, post %>
+      <span class="comments">(<%= pluralize(post.comments.size, 'comment') %>)</span>
+    </p>
+    <!-- <div class="published_at">on <%= post.published_at.strftime('%b %d, %Y') %></div> -->
+    <div class="content"><%= post.content %></div>
+  <% end
+  end %>
+</div>
+
+<br/>
+<br/>
+
+<div id="post"> 
+  <h3>5.Posts with the exact phrase "keyword search" and the number of words that may appear between the words in a phrase</h3>
+  
+  <% if @results5
+  for post in @results5 %>
+    <p>
+      <%= link_to post.title, post %>
+      <span class="comments">(<%= pluralize(post.comments.size, 'comment') %>)</span>
+    </p>
+    <!-- <div class="published_at">on <%= post.published_at.strftime('%b %d, %Y') %></div> -->
+    <div class="content"><%= post.content %></div>
+  <% end
+  end %>
 </div>
